@@ -5,6 +5,18 @@ var gameData = {
 		imps: 1,
 		humans: 0,
 	},
+    workers : {
+	    freeImps: 1,
+	    imps: {
+	        essenceGatherers: {
+	            amount: 0,
+                effect: 1,
+            },
+        },
+        humans: {
+
+        },
+    },
 	populationCap: {
 		imps: 5,
 		humans: 0,
@@ -16,7 +28,7 @@ var gameData = {
         evil: {
 			evilLair: {
 				level: 1,
-				cost: 10,
+				cost: 100,
 				costIncrease: 1.25,
 				effect: 5,
 			},
@@ -24,6 +36,7 @@ var gameData = {
     },
 };
 
+var essencePerSecond = gameData.workers.imps.essenceGatherers.amount * gameData.workers.imps.essenceGatherers.effect;
 
 /* LOG TESTS ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -36,10 +49,15 @@ document.getElementById("cheating10000").addEventListener("click", function () {
 document.getElementById("cheating10000000").addEventListener("click", function () {cheating(10000000);});
 document.getElementById("deleteSave").addEventListener("click", deleteSave);
 /*
-        Upgrades
+        Buildings
  */
 document.getElementById("evilLairButton").addEventListener("click", function () {populationBuildingUpgrade('evil', 'evilLair', 'imps', 'darkEssence')});
 
+/*
+        Workers
+ */
+document.getElementById("essencePlus").addEventListener("click", function () {changeImps('essenceGatherers', 'plus')});
+document.getElementById("essenceMin").addEventListener("click", function () {changeImps('essenceGatherers', 'min')});
 
 
 /* WRITE STORY ---------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -55,6 +73,24 @@ function populationBuildingUpgrade (type, building, race, resource) {
 		updateWebsite();
 	}
 }
+/* Worker Functions ------------------------------------------------------------------------------------------------------------------------------------------- */
+function changeImps(workertype, direction) {
+    if (direction === 'plus') {
+        if (gameData.workers.freeImps > 0) {
+            gameData.workers.imps[workertype].amount += 1;
+            gameData.workers.freeImps -= 1;
+            updateWebsite()
+        }
+    }
+    if (direction === 'min') {
+        if (gameData.workers.imps[workertype] > 0) {
+            gameData.workers.imps[workertype].amount -= 1;
+            gameData.workers.freeImps += 1;
+            updateWebsite()
+        }
+
+    }
+}
 
 /* Unlock Functions ------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -67,7 +103,6 @@ function disableElement(id){
     var element = document.getElementById(id);
     element.classList.add("disabled")
 }
-
 
 /* UNSORTED FUNCTIONS ------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -84,8 +119,16 @@ function deleteSave() {
 }
 
 function updateWebsite() {
+    /* resources */
+    document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
+    document.getElementById("essencePerSecond").innerHTML = essencePerSecond;
+
+    /* workers */
+    document.getElementById("freeImps").innerHTML = gameData.workers.freeImps;
+    document.getElementById("populationImpCap").innerHTML = gameData.population.imps;
+    document.getElementById("essenceGatherers").innerHTML = gameData.workers.imps.essenceGatherers.amount;
+	/* buildings */
     document.getElementById("impCap").innerHTML = gameData.populationCap.imps;
-	document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
     document.getElementById("evilLairLevel").innerHTML = gameData.populationBuildings.evil.evilLair.level;
     document.getElementById("evilLairCost").innerHTML = gameData.populationBuildings.evil.evilLair.cost;
 }
@@ -99,10 +142,14 @@ var mainGameLoop = window.setInterval(function () {
     /* if (gameData.resources.lumen >= 5){
         unlockElement("torch")
     }
-
     } */
 
     /* calculation */
+
+
+
+    /* add to resources */
+    gameData.resources.darkEssence += essencePerSecond;
     /* update */
     updateWebsite();
 }, 1000);

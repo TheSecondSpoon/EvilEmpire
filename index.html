@@ -59,9 +59,9 @@
 					<div>Dark Essence</div>
 				</div>
 				<div class="col">
-					<div><span>0</span>/<span id="impCap">5</span>
+					<div><span>1</span>/<span id="impCap">5</span>
 					</div>
-					<div id="darkEssence">0</div>
+					<div id="darkEssence">0 (<span id="essencePerSecond">0</span> p/s)</div>
 				</div>
 			</div>
 		</div>
@@ -92,9 +92,34 @@
 
                         <div id="job-evil" class="tab-pane fade show active" role="tabpanel" aria-labelledby="buildingsHuman-tab">
                             <hr>
-
+                            <div class="row">
+                                <div class="col">
+                                    Total free imps: <span id="freeImps"> 1 </span> / <span id="populationImpCap"> 1 </span>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Essence gatherers
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-sm btn-light btn-block" id="essencePlus">
+                                        +
+                                    </button>
+                                </div>
+                                <div class="col-1 text-center">
+                                    <span id="essenceGatherers">0</span>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-sm btn-light btn-block" id="essenceMin">
+                                        -
+                                    </button>
+                                </div>
+                                <div class="col-6 text-center">
+                                    Creates 0.1 Dark Essence per second
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
                         <!-- job-building-human ----------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
@@ -104,7 +129,6 @@
 
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Tab-Building ----------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -134,8 +158,8 @@
                                         Evil Lair (<span id="evilLairLevel">1</span>)
                                     </button>
                                     <span class="tooltiptext">
-                                Houses <span id="evilLairEffect">5<span> Imps <hr>
-                                Cost: <span id="evilLairCost">10<span> Dark Energy</span>
+                                Houses <span id="evilLairEffect">5</span> Imps <hr>
+                                Cost: <span id="evilLairCost">10</span> Dark Energy</span>
                                 </div>
                             </div>
                         </div>
