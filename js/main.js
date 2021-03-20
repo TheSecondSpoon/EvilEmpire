@@ -1,5 +1,4 @@
 /* VARIABLES ----------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
 var gameData = {
 	population: {
 		imps: 1,
@@ -36,7 +35,7 @@ var gameData = {
     },
 };
 
-var essencePerSecond = gameData.workers.imps.essenceGatherers.amount * gameData.workers.imps.essenceGatherers.effect;
+
 
 /* LOG TESTS ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -121,7 +120,7 @@ function deleteSave() {
 function updateWebsite() {
     /* resources */
     document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
-    /*document.getElementById("essencePerSecond").innerHTML = essencePerSecond;
+    document.getElementById("essencePerSecond").innerHTML = gameData.workers.imps.essenceGatherers.amount * gameData.workers.imps.essenceGatherers.effect;
 
     /* workers */
     document.getElementById("freeImps").innerHTML = gameData.workers.freeImps;
@@ -149,7 +148,7 @@ var mainGameLoop = window.setInterval(function () {
 
 
     /* add to resources */
-    gameData.resources.darkEssence += essencePerSecond;
+    gameData.resources.darkEssence += gameData.workers.imps.essenceGatherers.amount * gameData.workers.imps.essenceGatherers.effect;
     /* update */
     updateWebsite();
 }, 1000);
