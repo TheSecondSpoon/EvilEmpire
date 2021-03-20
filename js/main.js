@@ -120,8 +120,8 @@ function deleteSave() {
 function updateWebsite() {
     /* resources */
     document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
-    /* document.getElementById("essencePerSecond").innerHTML = gameData.workers.imps.essenceGatherers.amount * gameData.workers.imps.essenceGatherers.effect;
-    */
+    document.getElementById("essencePerSecond").innerHTML = gameData.workers.imps.essenceGatherers.amount * gameData.workers.imps.essenceGatherers.effect;
+    
     /* workers */
     document.getElementById("freeImps").innerHTML = gameData.workers.freeImps;
     document.getElementById("populationImpCap").innerHTML = gameData.population.imps;
