@@ -40,7 +40,6 @@ document.getElementById("deleteSave").addEventListener("click", deleteSave);
  */
 document.getElementById("evilLairButton").addEventListener("click", function () {populationBuildingUpgrade('evil', 'evilLair', 'imps' 'darkEssence')});
 
-}});
 
 
 /* WRITE STORY ---------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -54,6 +53,8 @@ function populationBuildingUpgrade (type, building, race, resource) {
 		gameData.populationCap[race] += gameData.populationBuildings[type][building].effect;
 		gameData.populationBuildings[type][building].cost = Math.round(gameData.populationBuildings[type][building].cost * gameData.populationBuildings[type][building].costIncrease);
 		updateWebsite();
+	}
+}
 
 /* Unlock Functions ------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -69,18 +70,7 @@ function disableElement(id){
 
 
 /* UNSORTED FUNCTIONS ------------------------------------------------------------------------------------------------------------------------------------------- */
-function lumenPerSecond() {
-    var upgrade = Object.values(gameData.buildings.lumen.upgrades);
-    var income = Object.values(gameData.buildings.lumen.income);
-    var lumenPerSecond = 0;
 
-    for (var i = 0; i < upgrade.length; i++) {
-        lumenPerSecond += upgrade[i] * income[i]
-    }
-
-    return lumenPerSecond
-
-}
 
 function cheating(amount) {
     gameData.resources.darkEssence += amount;
