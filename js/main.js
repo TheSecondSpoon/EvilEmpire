@@ -5,7 +5,7 @@ var gameData = {
 		imps: 1,
 		humans: 0,
 	},
-	populationCap:{
+	populationCap: {
 		imps: 5,
 		humans: 0,
 	},
@@ -47,7 +47,7 @@ document.getElementById("evilLairButton").addEventListener("click", function () 
 
 /* Upgrade Functions ------------------------------------------------------------------------------------------------------------------------------------------- */
 function populationBuildingUpgrade (type, building, race, resource) {
-	if (gameData.resource[resource] >= gameData.populationBuildings[type][building].cost) {
+	if (gameData.resources[resource] >= gameData.populationBuildings[type][building].cost) {
 		gameData.populationBuildings[type][building].level += 1;
 		gameData.resources[resource] -= gameData.populationBuildings[type][building].cost;
 		gameData.populationCap[race] += gameData.populationBuildings[type][building].effect;
