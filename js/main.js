@@ -1,67 +1,25 @@
-/* MODULE IMPORTS ------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-import log, {stories, writeStory} from "./story.js";
-
-
 /* VARIABLES ----------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 var gameData = {
+	population: {
+		imps: 1,
+		humans: 0,
+	},
+	populationCap:{
+		imps: 5,
+		humans: 0,
+	},
     resources: {
-        lumen: 0,
-        research: 0,
+        darkEssence: 0,
     },
-    buildings: {
-        lumen: {
-            upgrades: {
-                torch: 0,
-                campfire: 0,
-                bonfire: 0,
-            },
-            costs: {
-                torch: 10,
-                campfire: 100,
-                bonfire: 500,
-
-                costincrease: {
-                    torch: 1.15,
-                    campfire: 1.15,
-                    bonfire: 1.15,
-                },
-            },
-            income: {
-                torch: 1,
-                campfire: 5,
-                bonfire: 10,
-            },
-        },
-        research: {
-            upgrades:{
-                workbench: false,
-
-            },
-            costs:{
-                workbench: 5000,
-
-                costincrease:{
-                },
-            },
-            income:{
-
-            }
-
-        },
-    },
-
-    research: {
-        upgrades: {
-            blueflames: false,
-        },
-        costs: {
-            blueflames: 500,
-
-            costincrease: {
-
-                blueflames: 1.25,
-            },
+    populationBuildings: {
+        evil: {
+			evilLair: {
+				level: 1,
+				cost: 10,
+				costIncrease: 1.25,
+				effect: 5,
+			},
         },
     },
 };
@@ -73,8 +31,6 @@ var gameData = {
 /* EVENT LISTENERS  ----------------------------------------------------------------------------------------------------------------------------------------------------
         Basic
  */
-document.getElementById("hitFlint").addEventListener("click", hitFlint);
-document.getElementById("hitResearch").addEventListener('click', hitResearch);
 document.getElementById("cheating100").addEventListener("click", function () {cheating(100);});
 document.getElementById("cheating10000").addEventListener("click", function () {cheating(10000);});
 document.getElementById("cheating10000000").addEventListener("click", function () {cheating(10000000);});
@@ -82,54 +38,22 @@ document.getElementById("deleteSave").addEventListener("click", deleteSave);
 /*
         Upgrades
  */
-document.getElementById("torchButton").addEventListener("click", function () {buildingUpgrade('lumen', 'torch', 'lumen')});
-document.getElementById("campfireButton").addEventListener("click", function () {buildingUpgrade('lumen','campfire', 'lumen');});
-document.getElementById("bonfireButton").addEventListener("click", function () {buildingUpgrade('lumen','bonfire', 'lumen');});
-document.getElementById("researchWorkbench").addEventListener("click", function () {if (gameData.resources.lumen >= 5000){
-    gameData.buildings.research.upgrades.workbench = true;
-    gameData.resources.lumen -= 5000;
-    disableElement("researchWorkbench");
-    updateWebsite();
+document.getElementById("evilLairButton").addEventListener("click", function () {populationBuildingUpgrade('evil', 'evilLair', 'imps' 'darkEssence')});
+
 }});
-
-
-/*
-        Research
- */
-
 
 
 /* WRITE STORY ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
 /* Upgrade Functions ------------------------------------------------------------------------------------------------------------------------------------------- */
-function buildingUpgrade(type, upgrade, resource){
-    switch(type){
-        case "lumen":
-           standard_upgrade(type, upgrade, resource);
-            break;
-
-        case "research":
-            standard_upgrade(type,upgrade,resource);
-            break;
-    }
-}
-
-function standard_upgrade(affects, upgrade, resource) {
-    if (gameData.resources[resource] >= gameData.buildings[affects].costs[upgrade]) {
-        gameData.buildings[affects].upgrades[upgrade] += 1;
-        gameData.resources[resource] -= gameData.buildings[affects].costs[upgrade];
-        gameData.buildings[affects].costs[upgrade] = Math.round(gameData.buildings[affects].costs[upgrade] * gameData.buildings[affects].costs.costincrease[upgrade]);
-        updateWebsite();
-    }
-}
-function research_upgrade(research, upgrade, resource){
-    if (gameData.resources[resource] >= gameData.research.costs[upgrade]) {
-        gameData.research.upgrades[upgrade] = true;
-        gameData.resources[resource] -= gameData.research.costs[upgrade];
-        updateWebsite();
-    }
-}
+function populationBuildingUpgrade (type, building, race, resource) {
+	if (gameData.resource[resource] >= gameData.populationBuildings[type][building].cost) {
+		gameData.populationBuildings[type][building].level += 1;
+		gameData.resources[resource] -= gameData.populationBuildings[type][building].cost;
+		gameData.populationCap[race] += gameData.populationBuildings[type][building].effect;
+		gameData.populationBuildings[type][building].cost = Math.round(gameData.populationBuildings[type][building].cost * gameData.populationBuildings[type][building].costIncrease);
+		updateWebsite();
 
 /* Unlock Functions ------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -141,13 +65,6 @@ function unlockElement(id){
 function disableElement(id){
     var element = document.getElementById(id);
     element.classList.add("disabled")
-}
-function buttonUnlock(){
-
-}
-
-function tabUnlock(){
-
 }
 
 
@@ -166,16 +83,7 @@ function lumenPerSecond() {
 }
 
 function cheating(amount) {
-    gameData.resources.lumen += amount;
-    updateWebsite();
-}
-
-function hitFlint() {
-    gameData.resources.lumen += 1;
-    updateWebsite();
-}
-function hitResearch() {
-    gameData.resources.research += 1;
+    gameData.resources.darkEssence += amount;
     updateWebsite();
 }
 
@@ -186,13 +94,10 @@ function deleteSave() {
 }
 
 function updateWebsite() {
-    document.getElementById("lumen").innerHTML = "Lumen: " + gameData.resources.lumen + " (+" + lumenPerSecond() + " p/s)";
-    document.getElementById("torchButton").innerHTML = "Create Torch (" + gameData.buildings.lumen.upgrades.torch + ")";
-    document.getElementById("torchTool").innerHTML = "Generate 1 lumen per second<hr>Cost: " + gameData.buildings.lumen.costs.torch + " lumen";
-    document.getElementById("campfireButton").innerHTML = "Create campfire (" + gameData.buildings.lumen.upgrades.campfire + ")";
-    document.getElementById("campfireTool").innerHTML = "Generate 5 lumen per second<hr>Cost: " + gameData.buildings.lumen.costs.campfire + " lumen";
-    document.getElementById("bonfireButton").innerHTML = "Create bonfire (" + gameData.buildings.lumen.upgrades.bonfire + ")";
-    document.getElementById("bonfireTool").innerHTML = "Generate 10 lumen per second<hr>Cost: " + gameData.buildings.lumen.costs.bonfire + " lumen";
+    document.getElementById("impCap").innerHTML = gameData.populationCap.imps;
+	document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
+    document.getElementById("EvilLairLevel").innerHTML = gameData.populationBuildings.evil.evilLair.level;
+    document.getElementById("EvilLairCost").innerHTML = gameData.populationBuildings.evil.evilLair.cost;
 }
 
 
@@ -201,26 +106,13 @@ function updateWebsite() {
 
 var mainGameLoop = window.setInterval(function () {
     /* checks */
-    if (gameData.resources.lumen >= 5){
+    /* if (gameData.resources.lumen >= 5){
         unlockElement("torch")
     }
-    if (gameData.resources.lumen >= 50){
-        unlockElement("campfire")
-    }
-    if (gameData.resources.lumen >= 250){
-        unlockElement("bonfire")
-    }
 
-
-    if (gameData.buildings.lumen.upgrades.bonfire >= 1){
-        unlockElement("nav")
-    }
-    if (gameData.buildings.lumen.upgrades.bonfire >= 1){
-        unlockElement("navBuildings")
-    }
+    } */
 
     /* calculation */
-    gameData.resources.lumen += lumenPerSecond();
     /* update */
     updateWebsite();
 }, 1000);
