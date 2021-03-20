@@ -121,7 +121,7 @@ function deleteSave() {
 function updateWebsite() {
     /* resources */
     document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
-    document.getElementById("essencePerSecond").innerHTML = essencePerSecond;
+    /*document.getElementById("essencePerSecond").innerHTML = essencePerSecond;
 
     /* workers */
     document.getElementById("freeImps").innerHTML = gameData.workers.freeImps;
