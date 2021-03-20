@@ -107,21 +107,6 @@ var mainGameLoop = window.setInterval(function () {
     updateWebsite();
 }, 1000);
 
-var storyGameLoop = window.setInterval(function () {
-
-    log(0);
-    if (gameData.buildings.upgrades.torch >= 1) {
-        log(1);
-    }
-    if (gameData.buildings.upgrades.campfire >= 1) {
-        log(2);
-    }
-    if (gameData.buildings.upgrades.bonfire >= 1) {
-        log(3);
-    }
-
-}, 1000);
-
 var saveGameLoop = window.setInterval(function () {
     localStorage.setItem('lumenSave', JSON.stringify(gameData))
 
