@@ -38,7 +38,7 @@ document.getElementById("deleteSave").addEventListener("click", deleteSave);
 /*
         Upgrades
  */
-document.getElementById("evilLairButton").addEventListener("click", function () {populationBuildingUpgrade('evil', 'evilLair', 'imps' 'darkEssence')});
+document.getElementById("evilLairButton").addEventListener("click", function () {populationBuildingUpgrade('evil', 'evilLair', 'imps', 'darkEssence')});
 
 
 
