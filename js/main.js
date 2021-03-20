@@ -84,7 +84,7 @@ function deleteSave() {
 }
 
 function updateWebsite() {
-    
+
 	document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
     document.getElementById("EvilLairLevel").innerHTML = gameData.populationBuildings.evil.evilLair.level;
     document.getElementById("EvilLairCost").innerHTML = gameData.populationBuildings.evil.evilLair.cost;
@@ -119,7 +119,6 @@ window.onload = function () {
     if (savegame !== null) {
         gameData = savegame
     }
-    writeStory();
     updateWebsite();
 
 };
