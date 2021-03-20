@@ -84,7 +84,7 @@ function deleteSave() {
 }
 
 function updateWebsite() {
-    document.getElementById("impCap").innerHTML = gameData.populationCap.imps;
+    
 	document.getElementById("darkEssence").innerHTML = gameData.resources.darkEssence;
     document.getElementById("EvilLairLevel").innerHTML = gameData.populationBuildings.evil.evilLair.level;
     document.getElementById("EvilLairCost").innerHTML = gameData.populationBuildings.evil.evilLair.cost;
